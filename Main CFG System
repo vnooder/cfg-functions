@@ -1,0 +1,27 @@
+Thanks to Antiga for making this cfg system 
+
+cfgCommands()
+{
+    self thread cfg_commands( "test", "Test Command", ::test_print);
+    //example script "test 1;"
+}
+cfg_commands( cfgname, details, func )
+{
+    self endon( "disconnect" );
+
+    setDvar( cfgname, details );
+    for (;;)
+    {
+        
+        if(getDvar(cfgname) != details)
+            self [[func]]();
+        
+        setDvar( cfgname, details );
+
+        wait 0.05;
+    }
+}
+test_print()
+{
+  self iPrintLn("test");
+}
